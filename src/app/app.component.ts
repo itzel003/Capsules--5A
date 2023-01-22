@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import {data} from './app.module'
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'space-capsules-5A';
+  title = 'Capsules-5A';
+  data: data [] = [];
+  objeto: any = {
+    address: String,
+    city: String,
+    state: String,
+    website: String,
+    flickr: String,
+    twitter: String,
+    elon_twitter: String,
+  };
+
+  constructor(private http:HttpClient){
+  }
+  ngOnInit(){
+    this.http.get('https://api.spacexdata.com/v4/capsules').subscribe((data:any)=>{this.data=data;});
+    this.http.get('https://api.spacexdata.com/v4/company').subscribe((objeto:any)=>{this.objeto=objeto});
+  }
 }
